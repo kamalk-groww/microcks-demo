@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: API0
+  description: Sample API for learning about OpenAPI spec
+  version: 0.0.3
+
+paths:
+  /cars:
+    get:
+      summary: A list of cars
+      parameters:
+        - name: type
+          in: query
+          description: Type of car (e.g., suv, coupe, sedan, mini)
+          required: true
+          schema:
+            type: string
+      
+      x-microcks-operation:
+        delay: 100
+        dispatcher: SCRIPT
+        dispatchRules: |
+          def category = request.query['type'];
+          console.log("Category:", category);
+          if (category == 'suv') {
+            return 'suv_cars';
+          } else if (category == 'coupe') {
+            return 'coupe_cars';
+          } else if (category == 'sedan') {
+            return 'sedan_cars';
+          } else if (category == 'mini') {
+            return 'mini_cars';
+          }
+          return 'default';
+          
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                suv_cars:
+                  value: |
+                    [
+                      "Toyota RAV4",
+                      "Honda CR-V",
+                      "Ford Explorer"
+                    ]
+                coupe_cars:
+                  value: |
+                    [
+                      "Ford Mustang",
+                      "Chevrolet Camaro",
+                      "Dodge Challenger"
+                    ]
+                sedan_cars:
+                  value: |
+                    [
+                      "Toyota Camry",
+                      "Honda Accord",
+                      "Nissan Altima"
+                    ]
+                mini_cars:
+                  value: |
+                    [
+                      "Mini Cooper",
+                      "Fiat 500",
+                      "Smart Fortwo"
+                    ]
+                default:
+                  value: |
+                    []

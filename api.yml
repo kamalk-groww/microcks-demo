@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: API0
   description: Sample API for learning about OpenAPI spec
-  version: 0.0.3
+  version: 0.0.1
 
 paths:
   /cars:

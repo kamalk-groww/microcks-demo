@@ -21,7 +21,7 @@ paths:
         dispatcher: SCRIPT
         dispatchRules: |
           def category = request.query['type'];
-          console.log("Category:", category);
+          log.info("Category:", category);
           if (category == 'suv') {
             return 'suv_cars';
           } else if (category == 'coupe') {
@@ -73,4 +73,6 @@ paths:
                     ]
                 default:
                   value: |
-                    []
+                    [
+                      "Ferrari"
+                    ]
